@@ -19,9 +19,17 @@ void executeGo(const char *noun) {
     if (obj == NULL) {
         //already handled by getVisible
     }
-    else if (obj->location == NULL && obj != player->location) {
+    else if (getPassage(player->location, obj) != NULL) {
         printf("OK.\n");
         player->location = obj;
+        executeLook("around");
+    }
+    else if (obj->location != player->location) {
+        printf("You don't see any %s here.\n", noun);
+    }
+    else if (obj->destination != NULL) {
+        printf("OK.\n");
+        player->location = obj->destination;
         executeLook("around");
     }
     else {
